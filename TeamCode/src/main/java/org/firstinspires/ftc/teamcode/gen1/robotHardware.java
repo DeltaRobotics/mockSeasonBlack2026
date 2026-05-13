@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.gen1;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -35,8 +36,8 @@ public class robotHardware extends LinearOpMode
     public DcMotor[] drive = new DcMotor[4];
     VoltageSensor ControlHub_VoltageSensor = null;
 
-    public double moveSpeed = 0;//turn back to .5 when done fixing it
-    public double turnSpeed = 0;//turn back to .5 when done fixing it
+    public double moveSpeed = 0.5;//turn back to .5 when done fixing it
+    public double turnSpeed = 0.5;//turn back to .5 when done fixing it
 
     public double moveAccuracy  = 1;
     public double angleAccuracy = Math.toRadians(1);
@@ -60,7 +61,7 @@ public class robotHardware extends LinearOpMode
     double oppositeDistance = 0;
     double finalAngle = 0;
     int wheelDirection = 1;
-    double encoderTicksPerDegree = 65.743055;//6.40333;//78.38167
+    double encoderTicksPerDegree = 1.53722222;//6.40333;//78.38167
     int testing = 0;
 
     //PID Drive Variables
@@ -161,6 +162,9 @@ public class robotHardware extends LinearOpMode
         motorLF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        motorRF.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorLF.setDirection(DcMotorSimple.Direction.REVERSE);
+
         motorRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -197,7 +201,7 @@ public class robotHardware extends LinearOpMode
         //odo.setOffsets(-171.45, 6.35);
         //odo.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_SWINGARM_POD);
         //odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
-//        odo.resetPosAndIMU();
+        //odo.resetPosAndIMU();
 
         ControlHub_VoltageSensor = ahwMap.get(VoltageSensor.class, "Control Hub");
     }
@@ -205,10 +209,10 @@ public class robotHardware extends LinearOpMode
     public void swerveDrive(double forwardDrive, double strafeDrive, double heading, double speed){
         swerveCalculations(forwardDrive, strafeDrive, heading);
 
-        //motorRB.setPower((wheelDirection * power * speed) - turnPowerRight - turnPower * wheelDirection);
-        //motorRF.setPower((wheelDirection * -power * speed) - turnPowerRight + turnPower * wheelDirection);
-        //motorLB.setPower((wheelDirection * power * speed) + turnPowerLeft + turnPower * wheelDirection);
-        //motorLF.setPower((wheelDirection * -power * speed) + turnPowerLeft - turnPower * wheelDirection);
+        motorRB.setPower((wheelDirection * power * speed) - turnPowerRight - turnPower * wheelDirection);
+        motorRF.setPower((wheelDirection * -power * speed) - turnPowerRight + turnPower * wheelDirection);
+        motorLB.setPower((wheelDirection * power * speed) + turnPowerLeft + turnPower * wheelDirection);
+        motorLF.setPower((wheelDirection * -power * speed) + turnPowerLeft - turnPower * wheelDirection);
     }
     public void swerveCalculations(double forwardDrive, double strafeDrive, double heading){
         rightPodPosition = motorRB.getCurrentPosition() + motorRF.getCurrentPosition();
@@ -234,12 +238,11 @@ public class robotHardware extends LinearOpMode
         else {
             rotations = Math.ceil(currentAngle/360);
         }
+
         newAngle = newAngle + 360 * rotations; // stick pos + 360 for every rotation
         oppositeAngle = newAngle + 180;
 
-
         distance = distanceCalculator(currentAngle,newAngle);
-
 
         //decide what way is shorter. for example if currentAngle is 350 and new = Angle is 370 then back to 20
 
@@ -270,7 +273,6 @@ public class robotHardware extends LinearOpMode
             oppositeDistance = distanceCalculator(currentAngle, oppositeAngle);
             testing = 1;
         }
-
 
         if(oppositeDistance < distance){
             finalAngle = oppositeAngle;

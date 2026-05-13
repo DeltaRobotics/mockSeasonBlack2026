@@ -65,7 +65,7 @@ public class oldSwerve extends LinearOpMode
 
         while (opModeIsActive()) {
 
-            robot.swerveDrive(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, 0); //normal people
+            robot.swerveDrive(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robot.moveSpeed); //normal people
             //robot.mecanumDrive(gamepad1.right_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x, .75); //nolan
 
             telemetry.addData("turnPowerRight", robot.turnPowerRight);
@@ -76,6 +76,11 @@ public class oldSwerve extends LinearOpMode
             telemetry.addData("robot power", robot.power);
 
             //one +     two -
+            telemetry.addData("motorRB", robot.motorRB.getCurrentPosition());
+            telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());
+            telemetry.addData("motorLB",robot.motorLB.getCurrentPosition());
+            telemetry.addData("motorLF",robot.motorLF.getCurrentPosition());
+
             telemetry.addData("right pod pos", robot.rightPodPosition);
             telemetry.addData("left pod pos", robot.leftPodPosition);
             telemetry.addData("current angle right",robot.currentAngle);

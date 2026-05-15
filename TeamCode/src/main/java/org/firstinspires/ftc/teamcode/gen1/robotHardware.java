@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.gen1;
-//import com.acmerobotics.dashboard.config.Config;
 
 
+import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -11,14 +11,17 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import com.bylazar.telemetry.PanelsTelemetry;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 /**
  * Created by User on 10/1/2022.
  */
-//@Config //We need this for Dashboard to change variables
+@Configurable //We need this for Dashboard to change variables
 public class robotHardware extends LinearOpMode
 {
-    //FtcDashboard dashboard = FtcDashboard.getInstance();
-    //telemetry = dashboard.getTelemetry(); //This is used to read telemetry on the computer
+
     //drive motors
     public DcMotor motorRB = null;
     public DcMotor motorRF = null;
@@ -66,10 +69,10 @@ public class robotHardware extends LinearOpMode
 
     //PID Drive Variables
 
-    public static double DriveF = .15; // = 32767 / maxV      (do not edit from this number)
-    public static double DriveP = 0.05; // = 0.1 * F           (raise till real's apex touches Var apex)
-    public static double DriveI = 0.0;// = 0.1 * P           (fine adjustment of P)
-    public static double DriveD = 0.0; // = 0                     (raise to reduce oscillation)
+    /*public static*/ double DriveF = .15; // = 32767 / maxV      (do not edit from this number)
+    /*public static*/ double DriveP = 0.05; // = 0.1 * F           (raise till real's apex touches Var apex)
+    /*public static*/ double DriveI = 0.0;// = 0.1 * P           (fine adjustment of P)
+    /*public static*/ double DriveD = 0.0; // = 0                     (raise to reduce oscillation)
 
     double DrivePIDCurrentTime = 0;
     double DrivePIDTime = 0;
@@ -83,10 +86,10 @@ public class robotHardware extends LinearOpMode
 
     //PID Turning Variables
 
-    public static double TurnF = 0.1; // = 32767 / maxV      (do not edit from this number)
-    public static double TurnP = 3; // = 0.1 * F           (raise till real's apex touches Var apex)
-    public static double TurnI = 0.0; // = 0.1 * P           (fine adjustment of P)
-    public static double TurnD = 0; // = 0                     (raise to reduce oscillation)
+    /*public static*/ double TurnF = 0.1; // = 32767 / maxV      (do not edit from this number)
+    /*public static*/ double TurnP = 3; // = 0.1 * F           (raise till real's apex touches Var apex)
+    /*public static*/ double TurnI = 0.0; // = 0.1 * P           (fine adjustment of P)
+    /*public static*/ double TurnD = 0; // = 0                     (raise to reduce oscillation)
 
     double TurningPIDCurrentTime = 0;
     double TurningPIDTime = 0;
@@ -120,7 +123,7 @@ public class robotHardware extends LinearOpMode
     public static double GeneralF2 = 0.001; // = 32767 / maxV      (do not edit from this number)
     public static double GeneralP2 = 0.0025; // = 0.1 * F           (raise till real's apex touches Var apex)
     public static double GeneralI2 = 0;// = 0.1 * P           (fine adjustment of P)
-    public static double GeneralD2 = 0.0000; // = 0                     (raise to reduce oscillation)
+    public static double GeneralD2 = 0.0000; // = 0   not currently used                (raise to reduce oscillation)
 
     double GeneralPIDCurrentTime2 = 0;
     double GeneralPIDTime2 = 0;

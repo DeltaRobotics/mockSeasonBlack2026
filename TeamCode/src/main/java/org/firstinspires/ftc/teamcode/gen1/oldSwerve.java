@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.bylazar.configurables.PanelsConfigurables;
+import com.bylazar.field.PanelsField;
+import com.bylazar.telemetry.PanelsTelemetry;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -68,18 +71,143 @@ public class oldSwerve extends LinearOpMode
             robot.swerveDrive(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robot.moveSpeed); //normal people
             //robot.mecanumDrive(gamepad1.right_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x, .75); //nolan
 
-            telemetry.addData("turnPowerRight", robot.turnPowerRight);
-            telemetry.addData("aTan degrees", robot.aTan);
-            telemetry.addData("newAngle", robot.newAngle);
-            telemetry.addData("oppo angle ", robot.oppositeAngle);
-            telemetry.addData("rotations ", robot.rotations);
-            telemetry.addData("robot power", robot.power);
+
+            if(gamepad1.y && buttonY){
+                robot.DriveF = robot.DriveF + 0.005;
+
+                buttonY = false;
+            }
+            if(!gamepad1.y && !buttonY){
+
+                buttonY = true;
+            }
+            if(gamepad1.x && buttonX){
+                robot.DriveF = robot.DriveF - 0.005;
+
+                buttonX = false;
+            }
+            if(!gamepad1.x && !buttonX){
+
+                buttonX = true;
+            }
+
+
+            if(gamepad1.b && buttonB){
+                robot.DriveP = robot.DriveP + 0.0005;
+
+                buttonB = false;
+            }
+            if(!gamepad1.b && !buttonB){
+
+                buttonB = true;
+            }
+            if(gamepad1.a && buttonA){
+                robot.DriveP = robot.DriveP - 0.0005;
+
+                buttonA = false;
+            }
+            if(!gamepad1.a && !buttonA){
+
+                buttonA = true;
+            }
+
+
+            if(gamepad1.dpad_up && buttonDU){
+                robot.DriveD = robot.DriveD + 0.00005;
+
+                buttonDU = false;
+            }
+            if(!gamepad1.dpad_up && !buttonDU){
+
+                buttonDU = true;
+            }
+            if(gamepad1.dpad_left && buttonDL){
+                robot.DriveD = robot.DriveD - 0.00005;
+
+                buttonDL = false;
+            }
+            if(!gamepad1.dpad_left && !buttonDL){
+
+                buttonDL = true;
+            }
+
+
+            if(gamepad1.dpad_right && buttonDR){
+                robot.DriveI = robot.DriveI + 0.000005;
+
+                buttonDR = false;
+            }
+            if(!gamepad1.dpad_right && !buttonDR){
+
+                buttonDR = true;
+            }
+            if(gamepad1.dpad_down && buttonDD){
+                robot.DriveI = robot.DriveI - 0.000005;
+
+                buttonDD = false;
+            }
+            if(!gamepad1.dpad_down && !buttonDD){
+
+                buttonDD = true;
+            }
+
+
+
+
+
+
+            if(gamepad1.right_bumper && buttonRB){
+                robot.TurnP = robot.TurnP + 0.0005;
+
+                buttonRB = false;
+            }
+            if(!gamepad1.right_bumper && !buttonRB){
+
+                buttonRB = true;
+            }
+            if(gamepad1.left_bumper && buttonLB){
+                robot.TurnP = robot.TurnP - 0.0005;
+
+                buttonLB = false;
+            }
+            if(!gamepad1.left_bumper && !buttonLB){
+
+                buttonLB = true;
+            }
+
+
+            if(gamepad1.right_trigger > .5 && buttonRT){
+                robot.TurnD = robot.TurnD + 0.0005;
+
+                buttonRT = false;
+            }
+            if(gamepad1.right_trigger < .5 && !buttonRT){
+
+                buttonRT = true;
+            }
+            if(gamepad1.left_trigger > .5 && buttonLT){
+                robot.TurnD = robot.TurnD - 0.0005;
+
+                buttonLT = false;
+            }
+            if(gamepad1.left_trigger < .5 && !buttonLT){
+
+                buttonLT = true;
+            }
+
+
+            //telemetry.addData("turnPowerRight", robot.turnPowerRight);
+            //telemetry.addData("aTan degrees", robot.aTan);
+            //telemetry.addData("newAngle", robot.newAngle);
+            //telemetry.addData("oppo angle ", robot.oppositeAngle);
+            //telemetry.addData("rotations ", robot.rotations);
+            //telemetry.addData("robot power", robot.power);
 
             //one +     two -
-            telemetry.addData("motorRB", robot.motorRB.getCurrentPosition());
-            telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());
-            telemetry.addData("motorLB",robot.motorLB.getCurrentPosition());
-            telemetry.addData("motorLF",robot.motorLF.getCurrentPosition());
+            //telemetry.addData("motorRB", robot.motorRB.getCurrentPosition());
+            //telemetry.addData("motorRF", robot.motorRF.getCurrentPosition());
+            //telemetry.addData("motorLB",robot.motorLB.getCurrentPosition());
+            //telemetry.addData("motorLF",robot.motorLF.getCurrentPosition());
 
             telemetry.addData("right pod pos", robot.rightPodPosition);
             telemetry.addData("left pod pos", robot.leftPodPosition);
@@ -89,6 +217,23 @@ public class oldSwerve extends LinearOpMode
             telemetry.addData("distance",robot.distance);
             telemetry.addData("oppo-distance",robot.oppositeDistance);
             telemetry.addData("testing",robot.testing);
+
+
+            //telemetry.addData("General F", robot.GeneralF);
+            //telemetry.addData("General P", robot.GeneralP);
+            //telemetry.addData("General D", robot.GeneralD);
+            //telemetry.addData("General I", robot.GeneralI);
+
+            telemetry.addData("Drive F", robot.DriveF);
+            telemetry.addData("Drive P", robot.DriveP);
+            telemetry.addData("Drive D", robot.DriveD);
+            telemetry.addData("Drive I", robot.DriveI);
+
+            telemetry.addData("Turn F", robot.TurnF);
+            telemetry.addData("Turn P", robot.TurnP);
+            telemetry.addData("Turn D", robot.TurnD);
+            telemetry.addData("Turn I", robot.TurnI);
+
             telemetry.update();
 
         }

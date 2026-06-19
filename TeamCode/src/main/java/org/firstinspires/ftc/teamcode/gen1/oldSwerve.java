@@ -64,16 +64,37 @@ public class oldSwerve extends LinearOpMode
         robotHardware robot = new robotHardware(hardwareMap);
 
         while (!isStarted() && !isStopRequested()) {
+
+            robot.slidesR.setTargetPosition(0);
+            robot.slidesR.setPower(0.05);
+            robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            robot.slidesL.setTargetPosition(0);
+            robot.slidesL.setPower(0.05);
+            robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            robot.rightFinger.setPosition(.5);
+            robot.leftFinger.setPosition(.5);
+
+            robot.upWrist.setPosition(.5);
+            robot.sideWrist.setPosition(robot.SIDE_WRIST_STRAIGHT);
         }
 
         while (opModeIsActive()) {
 
             robot.swerveDrive(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robot.moveSpeed); //normal people
-            //robot.mecanumDrive(gamepad1.right_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x, .75); //nolan
-
+            //robot.swerveDrive(gamepad1.right_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x, robot.moveSpeed); //nolan
 
             if(gamepad1.y && buttonY){
-                robot.DriveF = robot.DriveF + 0.005;
+                //robot.DriveF = robot.DriveF + 0.005;
+
+                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() + 2);
+                robot.slidesR.setPower(0.05);
+                robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() + 2);
+                robot.slidesL.setPower(0.05);
+                robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 buttonY = false;
             }
@@ -82,7 +103,15 @@ public class oldSwerve extends LinearOpMode
                 buttonY = true;
             }
             if(gamepad1.x && buttonX){
-                robot.DriveF = robot.DriveF - 0.005;
+                //robot.DriveF = robot.DriveF - 0.005;
+
+                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() - 2);
+                robot.slidesR.setPower(0.05);
+                robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() - 2);
+                robot.slidesL.setPower(0.05);
+                robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 buttonX = false;
             }
@@ -92,8 +121,11 @@ public class oldSwerve extends LinearOpMode
             }
 
 
+
+
+
             if(gamepad1.b && buttonB){
-                robot.DriveP = robot.DriveP + 0.0005;
+                //robot.DriveP = robot.DriveP + 0.0005;
 
                 buttonB = false;
             }
@@ -102,7 +134,8 @@ public class oldSwerve extends LinearOpMode
                 buttonB = true;
             }
             if(gamepad1.a && buttonA){
-                robot.DriveP = robot.DriveP - 0.0005;
+                //robot.DriveP = robot.DriveP - 0.0005;
+
 
                 buttonA = false;
             }
@@ -112,8 +145,11 @@ public class oldSwerve extends LinearOpMode
             }
 
 
+
+
             if(gamepad1.dpad_up && buttonDU){
-                robot.DriveD = robot.DriveD + 0.00005;
+                //robot.DriveD = robot.DriveD + 0.00005;
+
 
                 buttonDU = false;
             }
@@ -122,7 +158,8 @@ public class oldSwerve extends LinearOpMode
                 buttonDU = true;
             }
             if(gamepad1.dpad_left && buttonDL){
-                robot.DriveD = robot.DriveD - 0.00005;
+                //robot.DriveD = robot.DriveD - 0.00005;
+
 
                 buttonDL = false;
             }
@@ -133,7 +170,7 @@ public class oldSwerve extends LinearOpMode
 
 
             if(gamepad1.dpad_right && buttonDR){
-                robot.DriveI = robot.DriveI + 0.000005;
+                //robot.DriveI = robot.DriveI + 0.000005;
 
                 buttonDR = false;
             }
@@ -142,7 +179,8 @@ public class oldSwerve extends LinearOpMode
                 buttonDR = true;
             }
             if(gamepad1.dpad_down && buttonDD){
-                robot.DriveI = robot.DriveI - 0.000005;
+                //robot.DriveI = robot.DriveI - 0.000005;
+
 
                 buttonDD = false;
             }
@@ -155,9 +193,9 @@ public class oldSwerve extends LinearOpMode
 
 
 
-
+            /*
             if(gamepad1.right_bumper && buttonRB){
-                robot.TurnP = robot.TurnP + 0.0005;
+                //robot.TurnP = robot.TurnP + 0.0005;
 
                 buttonRB = false;
             }
@@ -166,7 +204,7 @@ public class oldSwerve extends LinearOpMode
                 buttonRB = true;
             }
             if(gamepad1.left_bumper && buttonLB){
-                robot.TurnP = robot.TurnP - 0.0005;
+                //robot.TurnP = robot.TurnP - 0.0005;
 
                 buttonLB = false;
             }
@@ -177,7 +215,7 @@ public class oldSwerve extends LinearOpMode
 
 
             if(gamepad1.right_trigger > .5 && buttonRT){
-                robot.TurnD = robot.TurnD + 0.0005;
+                //robot.TurnD = robot.TurnD + 0.0005;
 
                 buttonRT = false;
             }
@@ -186,7 +224,7 @@ public class oldSwerve extends LinearOpMode
                 buttonRT = true;
             }
             if(gamepad1.left_trigger > .5 && buttonLT){
-                robot.TurnD = robot.TurnD - 0.0005;
+                //robot.TurnD = robot.TurnD - 0.0005;
 
                 buttonLT = false;
             }
@@ -194,6 +232,8 @@ public class oldSwerve extends LinearOpMode
 
                 buttonLT = true;
             }
+
+ */
 
 
             //telemetry.addData("turnPowerRight", robot.turnPowerRight);
@@ -218,25 +258,31 @@ public class oldSwerve extends LinearOpMode
             telemetry.addData("oppo-distance",robot.oppositeDistance);
             telemetry.addData("testing",robot.testing);
 
+            telemetry.addData("right finger position", robot.rightFinger.getPosition());
+            telemetry.addData("left finger position", robot.leftFinger.getPosition());
+            telemetry.addData("up wrist position", robot.upWrist.getPosition());
+            telemetry.addData("side wrist position", robot.sideWrist.getPosition());
+
+            telemetry.addData("right slides", robot.slidesR.getCurrentPosition());
+            telemetry.addData("left slides", robot.slidesL.getCurrentPosition());
 
             //telemetry.addData("General F", robot.GeneralF);
             //telemetry.addData("General P", robot.GeneralP);
             //telemetry.addData("General D", robot.GeneralD);
             //telemetry.addData("General I", robot.GeneralI);
 
-            telemetry.addData("Drive F", robot.DriveF);
-            telemetry.addData("Drive P", robot.DriveP);
-            telemetry.addData("Drive D", robot.DriveD);
-            telemetry.addData("Drive I", robot.DriveI);
+            //telemetry.addData("Drive F", robot.DriveF);
+            //telemetry.addData("Drive P", robot.DriveP);
+            //telemetry.addData("Drive D", robot.DriveD);
+            //telemetry.addData("Drive I", robot.DriveI);
 
-            telemetry.addData("Turn F", robot.TurnF);
-            telemetry.addData("Turn P", robot.TurnP);
-            telemetry.addData("Turn D", robot.TurnD);
-            telemetry.addData("Turn I", robot.TurnI);
+            //telemetry.addData("Turn F", robot.TurnF);
+            //telemetry.addData("Turn P", robot.TurnP);
+            //telemetry.addData("Turn D", robot.TurnD);
+            //telemetry.addData("Turn I", robot.TurnI);
 
             telemetry.update();
 
         }
     }
-
 }

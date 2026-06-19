@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -28,6 +29,12 @@ public class robotHardware extends LinearOpMode
     public DcMotor motorLB = null;
     public DcMotor motorLF = null;
 
+    public DcMotor rightSlideFlip = null;
+    public DcMotor leftSlideFlip = null;
+
+    public DcMotor slidesR = null;
+    public DcMotor slidesL = null;
+
 
     //odometry encoder objects
     public DcMotor leftEncoder = null;
@@ -38,6 +45,14 @@ public class robotHardware extends LinearOpMode
     public DcMotor[] odometers = new DcMotor[3];
     public DcMotor[] drive = new DcMotor[4];
     VoltageSensor ControlHub_VoltageSensor = null;
+
+    public Servo rightFinger = null;
+
+    public Servo leftFinger = null;
+
+    public Servo upWrist = null;
+
+    public Servo sideWrist = null;
 
     public double moveSpeed = 0.5;//turn back to .5 when done fixing it
     public double turnSpeed = 0.5;//turn back to .5 when done fixing it
@@ -136,23 +151,25 @@ public class robotHardware extends LinearOpMode
     double GeneralPIDMotorPower2 = 0;
 
 
-    public final double SLIDE_TOP = 2300;
-    public final double SLIDE_MID = 1150;
 
-    public final double WRIST_TOP = .25;
-    public final double WRIST_LOW = .85;
+    public final double UP_WRIST_REST = 0.75;
+    public final double UP_WRIST_TOP = 1;
+    public final double UP_WRIST_DOWN = 0.15;
 
-    public final double BUCKET_ARM_DROP = .75;
-    public final double BUCKET_ARM_REST = .1;
+    public final double SIDE_WRIST_STRAIGHT = 0.7;
+    public final double SIDE_WRIST_UPSIDE = 0;
 
-    public final double BUCKET_WRIST_DROP = .2;
-    public final double BUCKET_WRIST_REST = .3;
+    public final double RIGHT_FINGER_CLOSE = 0.5;
+    public final double LEFT_FINGER_CLOSE = 0.5;
+
+    public final double RIGHT_FINGER_OPEN = 0.55;
+    public final double LEFT_FINGER_OPEN = 0.45;
+
 
     public static ElapsedTime currentTime = new ElapsedTime();
 
 
-    public robotHardware(HardwareMap ahwMap)
-    {
+    public robotHardware(HardwareMap ahwMap) {
 
         //drive motors
         motorRF = ahwMap.dcMotor.get("motorRF");//Inside is top gear on swerve
@@ -182,6 +199,31 @@ public class robotHardware extends LinearOpMode
         motorRB.setPower(0);
         motorLF.setPower(0);
         motorLB.setPower(0);
+
+        slidesR = ahwMap.dcMotor.get("slidesR");
+        slidesL = ahwMap.dcMotor.get("slidesL");
+
+        slidesR.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        slidesR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slidesL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        slidesR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slidesL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        rightSlideFlip = ahwMap.dcMotor.get("rightSlideFlip");
+        leftSlideFlip = ahwMap.dcMotor.get("leftSlideFlip");
+
+        rightSlideFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlideFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        rightSlideFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftSlideFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        rightFinger = ahwMap.servo.get("rightFinger");
+        leftFinger = ahwMap.servo.get("leftFinger");
+        upWrist = ahwMap.servo.get("upWrist");
+        sideWrist = ahwMap.servo.get("sideWrist");
 
         //RightOutside.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -867,4 +909,5 @@ public class robotHardware extends LinearOpMode
     public boolean boolTimer (double time){
         return currentTime.milliseconds() > time;
     }
+
 }

@@ -28,11 +28,13 @@ public class potentiometerTest extends LinearOpMode {
             currentVoltage = potentiometer.getVoltage();
 
             // Turn the motor on or off based on the potentiometer’s position
+            /**
             if (currentVoltage < 1.65) {
                 test_motor.setPower(0);
             } else {
                 test_motor.setPower(0.3);
             }
+             **/
 
             // Show the potentiometer’s voltage in telemetry
             telemetry.addData("Potentiometer voltage", currentVoltage);

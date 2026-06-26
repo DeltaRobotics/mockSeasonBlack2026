@@ -165,6 +165,12 @@ public class robotHardware extends LinearOpMode
     public final double RIGHT_FINGER_OPEN = 0.55;
     public final double LEFT_FINGER_OPEN = 0.45;
 
+    public final double PIVOT_FORWARD_0 = 1.32;
+
+    public final double PIVOT_VERTICAL_90 = 2.875;
+
+    public final double PIVOT_BACK_120 = 3.325;
+
 
     public static ElapsedTime currentTime = new ElapsedTime();
 

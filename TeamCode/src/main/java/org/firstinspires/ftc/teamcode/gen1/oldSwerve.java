@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.gen1;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -50,7 +51,15 @@ public class oldSwerve extends LinearOpMode
     public boolean button2DU = true;
     public boolean button2DD = true;
 
+    public boolean rtOneButtonPress = true;
+
+    public boolean twoltOneButtonPress = true;
+
     public int MTCoffset = 0;
+
+    AnalogInput potentiometer;
+
+    double currentVoltage;
 
     public boolean[] timerArray = new boolean[20];
 
@@ -88,12 +97,12 @@ public class oldSwerve extends LinearOpMode
             if(gamepad1.y && buttonY){
                 //robot.DriveF = robot.DriveF + 0.005;
 
-                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() + 2);
-                robot.slidesR.setPower(0.05);
+                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() + 100);
+                robot.slidesR.setPower(1);
                 robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() + 2);
-                robot.slidesL.setPower(0.05);
+                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() + 100);
+                robot.slidesL.setPower(1);
                 robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 buttonY = false;
@@ -105,12 +114,12 @@ public class oldSwerve extends LinearOpMode
             if(gamepad1.x && buttonX){
                 //robot.DriveF = robot.DriveF - 0.005;
 
-                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() - 2);
-                robot.slidesR.setPower(0.05);
+                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() - 100);
+                robot.slidesR.setPower(1);
                 robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() - 2);
-                robot.slidesL.setPower(0.05);
+                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() - 100);
+                robot.slidesL.setPower(1);
                 robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 buttonX = false;
@@ -119,9 +128,6 @@ public class oldSwerve extends LinearOpMode
 
                 buttonX = true;
             }
-
-
-
 
 
             if(gamepad1.b && buttonB){
@@ -144,12 +150,15 @@ public class oldSwerve extends LinearOpMode
                 buttonA = true;
             }
 
-
-
-
             if(gamepad1.dpad_up && buttonDU){
                 //robot.DriveD = robot.DriveD + 0.00005;
+                robot.slidesR.setTargetPosition(1220);
+                robot.slidesR.setPower(1);
+                robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+                robot.slidesL.setTargetPosition(1220);
+                robot.slidesL.setPower(1);
+                robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 buttonDU = false;
             }
@@ -180,7 +189,13 @@ public class oldSwerve extends LinearOpMode
             }
             if(gamepad1.dpad_down && buttonDD){
                 //robot.DriveI = robot.DriveI - 0.000005;
+                robot.slidesR.setTargetPosition(0);
+                robot.slidesR.setPower(1);
+                robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+                robot.slidesL.setTargetPosition(0);
+                robot.slidesL.setPower(1);
+                robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
                 buttonDD = false;
             }
@@ -189,11 +204,6 @@ public class oldSwerve extends LinearOpMode
                 buttonDD = true;
             }
 
-
-
-
-
-            /*
             if(gamepad1.right_bumper && buttonRB){
                 //robot.TurnP = robot.TurnP + 0.0005;
 
@@ -216,6 +226,15 @@ public class oldSwerve extends LinearOpMode
 
             if(gamepad1.right_trigger > .5 && buttonRT){
                 //robot.TurnD = robot.TurnD + 0.0005;
+                if(rtOneButtonPress){
+                    robot.rightFinger.setPosition(.8);
+                    robot.leftFinger.setPosition(.2);
+                    rtOneButtonPress = false;
+                }else{
+                    robot.rightFinger.setPosition(.5);
+                    robot.leftFinger.setPosition(.5);
+                    rtOneButtonPress = true;
+                }
 
                 buttonRT = false;
             }
@@ -233,7 +252,35 @@ public class oldSwerve extends LinearOpMode
                 buttonLT = true;
             }
 
- */
+            if(gamepad2.left_trigger > .5 && buttonLT){
+                robot.upWrist.setPosition(robot.upWrist.getPosition() + 0.01);
+                //if(twoltOneButtonPress){
+
+                //    twoltOneButtonPress = false;
+                //}else{
+
+                //    twoltOneButtonPress = true;
+                //}
+
+                buttonLT = false;
+            }
+            if(gamepad2.left_trigger < .5 && !buttonLT){
+
+                buttonLT = true;
+            }
+
+            if(gamepad2.right_trigger > .5 && buttonLT){
+
+                robot.upWrist.setPosition(robot.upWrist.getPosition() - 0.01);
+
+                buttonLT = false;
+            }
+            if(gamepad2.left_trigger < .5 && !buttonLT){
+
+                buttonLT = true;
+            }
+
+
 
 
             //telemetry.addData("turnPowerRight", robot.turnPowerRight);
@@ -265,6 +312,8 @@ public class oldSwerve extends LinearOpMode
 
             telemetry.addData("right slides", robot.slidesR.getCurrentPosition());
             telemetry.addData("left slides", robot.slidesL.getCurrentPosition());
+
+            telemetry.addData("Potentiometer voltage", currentVoltage);
 
             //telemetry.addData("General F", robot.GeneralF);
             //telemetry.addData("General P", robot.GeneralP);

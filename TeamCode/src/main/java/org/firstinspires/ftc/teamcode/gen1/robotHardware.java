@@ -166,10 +166,11 @@ public class robotHardware extends LinearOpMode
     public final double LEFT_FINGER_OPEN = 0.45;
 
     public final double PIVOT_FORWARD_0 = 1.32;
-
     public final double PIVOT_VERTICAL_90 = 2.875;
-
     public final double PIVOT_BACK_120 = 3.325;
+
+
+    AnalogInput potentiometer;
 
 
     public static ElapsedTime currentTime = new ElapsedTime();
@@ -225,6 +226,10 @@ public class robotHardware extends LinearOpMode
 
         rightSlideFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSlideFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        rightSlideFlip.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        potentiometer = ahwMap.analogInput.get("potentiometer");
 
         rightFinger = ahwMap.servo.get("rightFinger");
         leftFinger = ahwMap.servo.get("leftFinger");
@@ -916,4 +921,9 @@ public class robotHardware extends LinearOpMode
         return currentTime.milliseconds() > time;
     }
 
+
+    public double voltageConversion(double targetPosition) {
+
+        return (targetPosition * 0.01333333) + 1.34;
+    }
 }

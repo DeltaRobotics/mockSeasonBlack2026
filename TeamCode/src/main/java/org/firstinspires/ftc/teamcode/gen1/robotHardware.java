@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.gen1;
 
 
-import com.bylazar.configurables.annotations.Configurable;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,14 +11,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 
-import com.bylazar.telemetry.PanelsTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
  * Created by User on 10/1/2022.
  */
-@Configurable //We need this for Dashboard to change variables
 public class robotHardware extends LinearOpMode
 {
 
@@ -169,10 +166,6 @@ public class robotHardware extends LinearOpMode
     public final double PIVOT_VERTICAL_90 = 2.875;
     public final double PIVOT_BACK_120 = 3.325;
 
-
-    AnalogInput potentiometer;
-
-
     public static ElapsedTime currentTime = new ElapsedTime();
 
 
@@ -190,7 +183,7 @@ public class robotHardware extends LinearOpMode
         motorLB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         motorRF.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorLF.setDirection(DcMotorSimple.Direction.REVERSE);
+        motorRB.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motorRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -229,8 +222,6 @@ public class robotHardware extends LinearOpMode
 
         rightSlideFlip.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        potentiometer = ahwMap.analogInput.get("potentiometer");
-
         rightFinger = ahwMap.servo.get("rightFinger");
         leftFinger = ahwMap.servo.get("leftFinger");
         upWrist = ahwMap.servo.get("upWrist");
@@ -262,14 +253,24 @@ public class robotHardware extends LinearOpMode
         ControlHub_VoltageSensor = ahwMap.get(VoltageSensor.class, "Control Hub");
     }
 
-    public void swerveDrive(double forwardDrive, double strafeDrive, double heading, double speed){
-        swerveCalculations(forwardDrive, strafeDrive, heading);
+    //public void swerveDrive(double forwardDrive, double strafeDrive, double heading, double speed){
+    //    swerveCalculations(forwardDrive, strafeDrive, heading);
 
-        motorRB.setPower((wheelDirection * power * speed) - turnPowerRight - turnPower * wheelDirection);
-        motorRF.setPower((wheelDirection * -power * speed) - turnPowerRight + turnPower * wheelDirection);
-        motorLB.setPower((wheelDirection * power * speed) + turnPowerLeft + turnPower * wheelDirection);
-        motorLF.setPower((wheelDirection * -power * speed) + turnPowerLeft - turnPower * wheelDirection);
+    //    motorRB.setPower((wheelDirection * power * speed) - turnPowerRight - turnPower * wheelDirection);
+    //    motorRF.setPower((wheelDirection * -power * speed) - turnPowerRight + turnPower * wheelDirection);
+    //    motorLB.setPower((wheelDirection * power * speed) + turnPowerLeft + turnPower * wheelDirection);
+    //    motorLF.setPower((wheelDirection * -power * speed) + turnPowerLeft - turnPower * wheelDirection);
+    //}
+
+    public void mecanumDrive(double forward, double strafe, double heading, double speed){
+
+        motorRF.setPower((((forward - strafe) * 1) - (heading * 1)) * speed);
+        motorRB.setPower((((forward + strafe) * 1) - (heading * 1)) * speed);
+        motorLB.setPower((((forward - strafe) * 1) + (heading * 1)) * speed);
+        motorLF.setPower((((forward + strafe) * 1) + (heading * 1)) * speed);
     }
+
+    /*
     public void swerveCalculations(double forwardDrive, double strafeDrive, double heading){
         rightPodPosition = motorRB.getCurrentPosition() + motorRF.getCurrentPosition();
         leftPodPosition  = motorLB.getCurrentPosition() + motorLF.getCurrentPosition();
@@ -375,6 +376,8 @@ public class robotHardware extends LinearOpMode
         }
         return x;
     }
+
+     */
 
 
     public void resetDriveEncoders() {
@@ -650,7 +653,7 @@ public class robotHardware extends LinearOpMode
             }
 
             //set the motors to the correct powers to move toward the target
-            swerveDrive(-movementXpower,movementYpower, movementTurnPower, voltComp);
+            mecanumDrive(-movementXpower,movementYpower, movementTurnPower, voltComp);
         }
 
         //at the end of the movement stop the motors
@@ -701,7 +704,7 @@ public class robotHardware extends LinearOpMode
         }
 
         //set the motors to the correct powers to move toward the target
-        swerveDrive(-movementXpower, movementYpower, movementTurnPower, voltComp);
+        mecanumDrive(-movementXpower, movementYpower, movementTurnPower, voltComp);
         //swerveDrive(0, 0, movementTurnPower, voltComp);
 
         double[] returnValue = {distanceToTarget, absoluteAngleToTarget, reletiveXToTarget, reletiveYToTarget, movementXpower, movementYpower, movementTurnPower, reletiveTurnAngle, reletiveAngleToTarget};

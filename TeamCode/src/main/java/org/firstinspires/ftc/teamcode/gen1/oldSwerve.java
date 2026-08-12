@@ -53,6 +53,8 @@ public class oldSwerve extends LinearOpMode
 
     public boolean rtOneButtonPress = true;
 
+    public boolean lbOneButtonPress = true;
+
     public boolean twoltOneButtonPress = true;
 
     public int MTCoffset = 0;
@@ -75,19 +77,27 @@ public class oldSwerve extends LinearOpMode
 
         while (!isStarted() && !isStopRequested()) {
 
-            //robot.slidesR.setTargetPosition(0);
-            //robot.slidesR.setPower(0.05);
-            //robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.leftSlideFlip.setTargetPosition(0);
+            robot.leftSlideFlip.setPower(0.05);
+            robot.leftSlideFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            //robot.slidesL.setTargetPosition(0);
-            //robot.slidesL.setPower(0.05);
-            //robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.rightSlideFlip.setTargetPosition(0);
+            robot.rightSlideFlip.setPower(0.05);
+            robot.rightSlideFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            //robot.rightFinger.setPosition(.5);
-            //robot.leftFinger.setPosition(.5);
+            robot.slidesR.setTargetPosition(0);
+            robot.slidesR.setPower(0.05);
+            robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            //robot.upWrist.setPosition(.5);
-            //robot.sideWrist.setPosition(robot.SIDE_WRIST_STRAIGHT);
+            robot.slidesL.setTargetPosition(0);
+            robot.slidesL.setPower(0.05);
+            robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            robot.rightFinger.setPosition(.5);
+            robot.leftFinger.setPosition(.5);
+
+            robot.upWrist.setPosition(.5);
+            robot.sideWrist.setPosition(robot.SIDE_WRIST_STRAIGHT);
         }
 
         while (opModeIsActive()) {
@@ -95,40 +105,47 @@ public class oldSwerve extends LinearOpMode
             robot.mecanumDrive(gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, robot.moveSpeed); //normal people
             //robot.mecanumDrive(gamepad1.right_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x, robot.moveSpeed); //nolan
 
-            /*
+            robot.slidesR.setTargetPosition((int)(gamepad1.right_trigger * 1300));
+            robot.slidesR.setPower(.5);
+            robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            if(gamepad1.y && buttonY){
+            robot.slidesL.setTargetPosition((int)(gamepad1.right_trigger * 1300));
+            robot.slidesL.setPower(.5);
+            robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() + 100);
-                robot.slidesR.setPower(1);
-                robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            if(gamepad1.b && buttonB){
 
-                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() + 100);
-                robot.slidesL.setPower(1);
-                robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.leftSlideFlip.setTargetPosition(robot.leftSlideFlip.getCurrentPosition() + 10);
+                robot.leftSlideFlip.setPower(0.5);
+                robot.leftSlideFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                buttonY = false;
+                robot.rightSlideFlip.setTargetPosition(robot.rightSlideFlip.getCurrentPosition() + 10);
+                robot.rightSlideFlip.setPower(0.5);
+                robot.rightSlideFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                buttonB = false;
             }
-            if(!gamepad1.y && !buttonY){
+            if(!gamepad1.b && !buttonB){
 
-                buttonY = true;
+                buttonB = true;
             }
-            if(gamepad1.x && buttonX){
+            if(gamepad1.a && buttonA){
 
-                robot.slidesR.setTargetPosition(robot.slidesR.getCurrentPosition() - 100);
-                robot.slidesR.setPower(1);
-                robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.leftSlideFlip.setTargetPosition(robot.leftSlideFlip.getCurrentPosition() - 10);
+                robot.leftSlideFlip.setPower(0.5);
+                robot.leftSlideFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                robot.slidesL.setTargetPosition(robot.slidesL.getCurrentPosition() - 100);
-                robot.slidesL.setPower(1);
-                robot.slidesL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.rightSlideFlip.setTargetPosition(robot.rightSlideFlip.getCurrentPosition() - 10);
+                robot.rightSlideFlip.setPower(0.5);
+                robot.rightSlideFlip.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                buttonX = false;
+                buttonA = false;
             }
-            if(!gamepad1.x && !buttonX){
+            if(!gamepad1.a && !buttonA){
 
-                buttonX = true;
+                buttonA = true;
             }
+
 
 
             if(gamepad1.dpad_up && buttonDU){
@@ -148,33 +165,9 @@ public class oldSwerve extends LinearOpMode
                 buttonDU = true;
             }
 
-             */
 
-
-            if(gamepad1.dpad_left && buttonDL){
-
-
-                buttonDL = false;
-            }
-            if(!gamepad1.dpad_left && !buttonDL){
-
-                buttonDL = true;
-            }
-
-
-            if(gamepad1.dpad_right && buttonDR){
-
-
-                buttonDR = false;
-            }
-            if(!gamepad1.dpad_right && !buttonDR){
-
-                buttonDR = true;
-            }
-
-            /*
             if(gamepad1.dpad_down && buttonDD){
-                //robot.DriveI = robot.DriveI - 0.000005;
+
                 robot.slidesR.setTargetPosition(0);
                 robot.slidesR.setPower(1);
                 robot.slidesR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -186,23 +179,20 @@ public class oldSwerve extends LinearOpMode
                 buttonDD = false;
             }
             if(!gamepad1.dpad_down && !buttonDD){
-
                 buttonDD = true;
             }
 
-             */
-
-            if(gamepad1.right_bumper && buttonRB){
 
 
-                buttonRB = false;
-            }
-            if(!gamepad1.right_bumper && !buttonRB){
+            if(gamepad1.leftBumperWasPressed() && buttonLB){
 
-                buttonRB = true;
-            }
-            if(gamepad1.left_bumper && buttonLB){
-
+                if(lbOneButtonPress){
+                    robot.sideWrist.setPosition(robot.SIDE_WRIST_STRAIGHT);
+                    lbOneButtonPress = false;
+                }else{
+                    robot.sideWrist.setPosition(robot.SIDE_WRIST_UPSIDE);
+                    lbOneButtonPress = true;
+                }
 
                 buttonLB = false;
             }
@@ -212,8 +202,8 @@ public class oldSwerve extends LinearOpMode
             }
 
 
-            if(gamepad1.right_trigger > .5 && buttonRT){
-                //robot.TurnD = robot.TurnD + 0.0005;
+            if(gamepad1.rightBumperWasPressed() && buttonRB){
+
                 if(rtOneButtonPress){
                     robot.rightFinger.setPosition(.8);
                     robot.leftFinger.setPosition(.2);
@@ -224,72 +214,13 @@ public class oldSwerve extends LinearOpMode
                     rtOneButtonPress = true;
                 }
 
-                buttonRT = false;
+                buttonRB = false;
             }
-            if(gamepad1.right_trigger < .5 && !buttonRT){
+            if(!gamepad1.right_bumper && !buttonRB){
 
-                buttonRT = true;
-            }
-            if(gamepad1.left_trigger > .5 && buttonLT){
-                //robot.TurnD = robot.TurnD - 0.0005;
-
-                buttonLT = false;
-            }
-            if(gamepad1.left_trigger < .5 && !buttonLT){
-
-                buttonLT = true;
+                buttonRB = true;
             }
 
-            if(gamepad2.left_trigger > .5 && button2LT){
-                robot.upWrist.setPosition(robot.upWrist.getPosition() + 0.01);
-                //if(twoltOneButtonPress){
-
-                //    twoltOneButtonPress = false;
-                //}else{
-
-                //    twoltOneButtonPress = true;
-                //}
-
-                button2LT = false;
-            }
-            if(gamepad2.left_trigger < .5 && !button2LT){
-
-                button2LT = true;
-            }
-
-            if(gamepad2.right_trigger > .5 && buttonRT){
-
-                robot.upWrist.setPosition(robot.upWrist.getPosition() - 0.01);
-
-                buttonRT = false;
-            }
-            if(gamepad2.right_trigger < .5 && !buttonRT){
-
-                buttonRT = true;
-            }
-
-
-
-            if(gamepad1.b && buttonB){
-
-                targetVoltage = robot.voltageConversion(90);
-
-                buttonB = false;
-            }
-            if(!gamepad1.b && !buttonB){
-
-                buttonB = true;
-            }
-            if(gamepad1.a && buttonA){
-
-                targetVoltage = robot.voltageConversion(0);
-
-                buttonA = false;
-            }
-            if(!gamepad1.a && !buttonA){
-
-                buttonA = true;
-            }
 
             /*
             if(Math.abs(currentVoltage - targetVoltage) < 0.05){
@@ -315,64 +246,6 @@ public class oldSwerve extends LinearOpMode
             }
 
              */
-
-            if(gamepad2.y && button2Y){
-
-                button2Y = false;
-            }
-            if(!gamepad2.y && !button2Y){
-
-                button2Y = true;
-            }
-            if(gamepad2.x && button2X){
-
-
-                button2X = false;
-            }
-            if(!gamepad2.x && !button2X){
-
-                button2X = true;
-            }
-
-
-
-            if(gamepad2.dpad_right && button2DR){
-
-                button2DR = false;
-            }
-            if(!gamepad2.dpad_right && !button2DR){
-
-                button2DR = true;
-            }
-            if(gamepad2.dpad_down && button2DD){
-
-                button2DD = false;
-            }
-            if(!gamepad2.dpad_down && !button2DD){
-
-                button2DD = true;
-            }
-
-
-            if(gamepad2.dpad_up && button2DU){
-
-                button2DU = false;
-            }
-            if(!gamepad2.dpad_up && !button2DU){
-
-                button2DU = true;
-            }
-            if(gamepad2.dpad_left && button2DL){
-
-
-                button2DL = false;
-            }
-            if(!gamepad2.dpad_left && !button2DL){
-
-                button2DL = true;
-            }
-
-
 
 
 
@@ -402,6 +275,8 @@ public class oldSwerve extends LinearOpMode
             telemetry.addData("left finger position", robot.leftFinger.getPosition());
             telemetry.addData("up wrist position", robot.upWrist.getPosition());
             telemetry.addData("side wrist position", robot.sideWrist.getPosition());
+
+            telemetry.addData("right Flip", robot.rightSlideFlip.getCurrentPosition());
 
             telemetry.addData("right slides", robot.slidesR.getCurrentPosition());
             telemetry.addData("left slides", robot.slidesL.getCurrentPosition());

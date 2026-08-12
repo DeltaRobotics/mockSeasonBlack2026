@@ -159,12 +159,16 @@ public class robotHardware extends LinearOpMode
     public final double RIGHT_FINGER_CLOSE = 0.5;
     public final double LEFT_FINGER_CLOSE = 0.5;
 
-    public final double RIGHT_FINGER_OPEN = 0.55;
-    public final double LEFT_FINGER_OPEN = 0.45;
+    public final double RIGHT_FINGER_OPEN = 0.8;
+    public final double LEFT_FINGER_OPEN = 0.2;
 
-    public final double PIVOT_FORWARD_0 = 1.32;
-    public final double PIVOT_VERTICAL_90 = 2.875;
-    public final double PIVOT_BACK_120 = 3.325;
+    public final double PIVOT_FORWARD_0 = 0;
+    public final double PIVOT_VERTICAL_90 = 0;
+    public final double PIVOT_BACK_120 = 0;
+
+    public final double SLIDES_UP = 1300;
+    public final double SLIDES_MID = 0;
+    public final double SLIDES_DOWN = 0;
 
     public static ElapsedTime currentTime = new ElapsedTime();
 
@@ -202,8 +206,6 @@ public class robotHardware extends LinearOpMode
 
         slidesR = ahwMap.dcMotor.get("slidesR");
         slidesL = ahwMap.dcMotor.get("slidesL");
-
-        slidesR.setDirection(DcMotorSimple.Direction.REVERSE);
 
         slidesR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slidesL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

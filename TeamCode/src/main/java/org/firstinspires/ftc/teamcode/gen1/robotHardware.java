@@ -51,8 +51,8 @@ public class robotHardware extends LinearOpMode
 
     public Servo sideWrist = null;
 
-    public double moveSpeed = 0.5;//turn back to .5 when done fixing it
-    public double turnSpeed = 0.5;//turn back to .5 when done fixing it
+    public double moveSpeed = 0.25;//turn back to .5 when done fixing it
+    public double turnSpeed = 0.25;//turn back to .5 when done fixing it
 
     public double moveAccuracy  = 1;
     public double angleAccuracy = Math.toRadians(1);
@@ -162,9 +162,9 @@ public class robotHardware extends LinearOpMode
     public final double RIGHT_FINGER_OPEN = 0.8;
     public final double LEFT_FINGER_OPEN = 0.2;
 
-    public final double PIVOT_FORWARD_0 = 0;
-    public final double PIVOT_VERTICAL_90 = 0;
-    public final double PIVOT_BACK_120 = 0;
+    public final int PIVOT_FORWARD_0 = 75;
+    public final int PIVOT_VERTICAL_90 = 900; //1245
+    public final int PIVOT_BACK_120 = 1485; //1685
 
     public final double SLIDES_UP = 1300;
     public final double SLIDES_MID = 0;
@@ -219,8 +219,8 @@ public class robotHardware extends LinearOpMode
         rightSlideFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftSlideFlip.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        rightSlideFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftSlideFlip.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSlideFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftSlideFlip.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         rightSlideFlip.setDirection(DcMotorSimple.Direction.REVERSE);
 
